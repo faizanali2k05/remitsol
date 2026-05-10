@@ -7,6 +7,9 @@ skip-lint = false
 [programs.localnet]
 remitsol = "HhNrDYKVCq9Hx9tgyWVbbtrhFnVxQqWW2iHSqn3RKxTa"
 
+[programs.devnet]
+remitsol = "HhNrDYKVCq9Hx9tgyWVbbtrhFnVxQqWW2iHSqn3RKxTa"
+
 [registry]
 url = "https://api.apr.dev"
 
