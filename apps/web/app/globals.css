@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand: trust-bank green + cream */
+  --color-bg: #faf7f0;
+  --color-bg-elevated: #ffffff;
+  --color-text: #0a1f17;
+  --color-text-muted: #5b6b63;
+  --color-border: #e7e2d2;
+
+  --color-primary: #0f7a4f;
+  --color-primary-600: #0c6541;
+  --color-primary-50: #e6f2ec;
+  --color-accent: #f5d547;
+  --color-success: #2dbe7e;
+  --color-danger: #e5484d;
+
+  --color-wu: #ffd60a; /* Western Union yellow, for the comparison widget */
+  --color-wu-text: #1a1a1a;
+
+  --font-display: var(--font-jakarta);
+  --font-sans: var(--font-inter);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-card: 1.25rem;
+  --shadow-soft: 0 1px 2px rgba(10, 31, 23, 0.04),
+    0 8px 24px -8px rgba(10, 31, 23, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--color-border);
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Stronger numeric tabular figures everywhere */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Wallet adapter modal overrides to match our brand */
+.wallet-adapter-button {
+  background: var(--color-primary) !important;
+  border-radius: 999px !important;
+  height: 42px !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 600 !important;
+  transition: transform 0.15s ease, background 0.15s ease !important;
+}
+.wallet-adapter-button:hover {
+  background: var(--color-primary-600) !important;
+  transform: translateY(-1px);
+}
+.wallet-adapter-modal-wrapper {
+  background: var(--color-bg-elevated) !important;
+  border-radius: var(--radius-card) !important;
+}
+.wallet-adapter-modal-title {
+  color: var(--color-text) !important;
 }

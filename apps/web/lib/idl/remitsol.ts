@@ -1,0 +1,119 @@
+// Auto-derived from programs/remitsol/src/lib.rs.
+// Keep this in sync with apps/web/lib/idl/remitsol.json.
+
+export type Remitsol = {
+  address: "HhNrDYKVCq9Hx9tgyWVbbtrhFnVxQqWW2iHSqn3RKxTa";
+  metadata: {
+    name: "remitsol";
+    version: "0.1.0";
+    spec: "0.1.0";
+    description: "Stablecoin remittance escrow on Solana";
+  };
+  instructions: [
+    {
+      name: "create_transfer";
+      discriminator: [163, 52, 200, 231, 140, 3, 69, 186];
+      accounts: [
+        { name: "sender"; writable: true; signer: true },
+        {
+          name: "transfer_state";
+          writable: true;
+          pda: {
+            seeds: [
+              { kind: "const"; value: [116, 114, 97, 110, 115, 102, 101, 114] },
+              { kind: "account"; path: "sender" },
+              { kind: "arg"; path: "claim_code_hash" }
+            ];
+          };
+        },
+        { name: "mint" },
+        { name: "sender_token_account"; writable: true },
+        {
+          name: "escrow_token_account";
+          writable: true;
+          pda: {
+            seeds: [
+              { kind: "const"; value: [101, 115, 99, 114, 111, 119] },
+              { kind: "account"; path: "transfer_state" }
+            ];
+          };
+        },
+        { name: "token_program"; address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" },
+        { name: "system_program"; address: "11111111111111111111111111111111" },
+        { name: "rent"; address: "SysvarRent111111111111111111111111111111111" }
+      ];
+      args: [
+        { name: "claim_code_hash"; type: { array: ["u8", 32] } },
+        { name: "amount"; type: "u64" }
+      ];
+    },
+    {
+      name: "claim_transfer";
+      discriminator: [3, 56, 22, 207, 188, 145, 121, 39];
+      accounts: [
+        { name: "recipient"; writable: true; signer: true },
+        { name: "transfer_state"; writable: true },
+        {
+          name: "escrow_token_account";
+          writable: true;
+          pda: {
+            seeds: [
+              { kind: "const"; value: [101, 115, 99, 114, 111, 119] },
+              { kind: "account"; path: "transfer_state" }
+            ];
+          };
+        },
+        { name: "recipient_token_account"; writable: true },
+        { name: "token_program"; address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" }
+      ];
+      args: [{ name: "claim_code"; type: "string" }];
+    },
+    {
+      name: "cancel_transfer";
+      discriminator: [193, 90, 41, 11, 28, 64, 251, 222];
+      accounts: [
+        { name: "sender"; writable: true; signer: true },
+        { name: "transfer_state"; writable: true },
+        {
+          name: "escrow_token_account";
+          writable: true;
+          pda: {
+            seeds: [
+              { kind: "const"; value: [101, 115, 99, 114, 111, 119] },
+              { kind: "account"; path: "transfer_state" }
+            ];
+          };
+        },
+        { name: "sender_token_account"; writable: true },
+        { name: "token_program"; address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" }
+      ];
+      args: [];
+    }
+  ];
+  accounts: [
+    { name: "TransferState"; discriminator: [205, 5, 88, 121, 11, 21, 158, 90] }
+  ];
+  types: [
+    {
+      name: "TransferState";
+      type: {
+        kind: "struct";
+        fields: [
+          { name: "sender"; type: "pubkey" },
+          { name: "claim_code_hash"; type: { array: ["u8", 32] } },
+          { name: "amount"; type: "u64" },
+          { name: "mint"; type: "pubkey" },
+          { name: "claimed"; type: "bool" },
+          { name: "created_at"; type: "i64" },
+          { name: "bump"; type: "u8" }
+        ];
+      };
+    }
+  ];
+  errors: [
+    { code: 6000; name: "AlreadyClaimed"; msg: "Transfer already claimed" },
+    { code: 6001; name: "InvalidCode"; msg: "Invalid claim code" },
+    { code: 6002; name: "Unauthorized"; msg: "Only the original sender can cancel this transfer" },
+    { code: 6003; name: "ZeroAmount"; msg: "Amount must be greater than zero" }
+  ];
+};

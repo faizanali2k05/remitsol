@@ -1,0 +1,46 @@
+Ran terminal command:  cd /home/faizan/dev/remitsol && anchor build
+Completed with input:  cd /home/faizan/dev/remitsol && anchor build
+
+This is a compatibility issue between Anchor 0.30.1 and the nightly Rust version. Let me use the stable toolchain instead: 
+
+Ran terminal command:  cd /home/faizan/dev/remitsol && rustup override set stable && anchor build
+
+The issue is with Anchor 0.30.1 being incompatible with the current Rust version. Let me update the Anchor version to a compatible one:  
+
+Read [](file:///home/faizan/dev/remitsol/Anchor.toml)
+
+Replacing 3 lines with 3 lines in [](file:///home/faizan/dev/remitsol/programs/remitsol/Cargo.toml)
+
+
+```
+
+```
+
+
+Ran terminal command:  cd /home/faizan/dev/remitsol && cargo update && anchor build
+
+Let me check if the build succeeded: 
+
+Ran terminal command:  ls -la /home/faizan/dev/remitsol/target/deploy/remitsol.so 2>/dev/null && echo "BUILD SUCCESS" || echo "BUILD FAILED"
+
+Excellent! Build succeeded. Now let me get the program ID and deploy: 
+
+Ran terminal command:  solana address -k /home/faizan/dev/remitsol/target/deploy/remitsol-keypair.json
+
+Program ID is already correct: `HhNrDYKVCq9Hx9tgyWVbbtrhFnVxQqWW2iHSqn3RKxTa`. Now deploying to devnet:  
+
+Ran terminal command:  cd /home/faizan/dev/remitsol && solana config set --url devnet && anchor deploy --provider.cluster devnet
+
+Perfect! Now let me commit to git and push: 
+
+Ran terminal command:  cd /home/faizan/dev/remitsol && git add -A && git commit -m "Initial Anchor program deployment to devnet"
+
+**Program deployed, program ID: `HhNrDYKVCq9Hx9tgyWVbbtrhFnVxQqWW2iHSqn3RKxTa`**
+
+✅ Build complete
+✅ Deployed to devnet  
+✅ Committed to git
+
+Ready for frontend wiring next — wallet adapter setup, send page, claim page, and the fee-comparison animation.
+
+Made changes.

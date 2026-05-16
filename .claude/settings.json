@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(solana config *)",
+      "Bash(solana balance *)",
+      "Bash(solana address *)",
+      "Bash(echo \"TSC $?\")",
+      "Bash(npx ts-node *)",
+      "Bash(TS_NODE_PROJECT=scripts/tsconfig.json npx ts-node scripts/airdrop-usdc.ts init)",
+      "Bash(git -C /home/faizan/dev/remitsol check-ignore apps/web/.env.local)"
+    ]
+  }
+}
